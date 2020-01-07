@@ -26,6 +26,11 @@ broche la plus courte de la LED est le **-**):
                 [sysfs](https://www.kernel.org/doc/Documentation/gpio/sysfs.txt),
                 allumez et éteignez la LED connectée à la GPIO 17.
 
+echo 17 > export *pour avoir le port gpio17 de disponible.*
+cd gpio17
+echo 1 > value *pour allumer la led*
+
+
 ### Python
 
 Il existe aussi un paquet python pour la RPi. Ce paquet, installé via
@@ -35,6 +40,17 @@ buildroot, est nommé **python-rpi-gpio**. La documentation est
 **Question 2**: Utilisez cette API Python pour allumer/éteindre la LED
                 connectée à la GPIO 17 (faire attention au mode BCM ou BOARD).
 
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(17,GPIO.OUT)
+print "LED on"
+GPIO.output(17,GPIO.HIGH)
+time.sleep(1)
+print "LED off"
+GPIO.output(17,GPIO.LOW)
 
 ### PWM
 
@@ -97,6 +113,30 @@ Type "help", "copyright", "credits" or "license" for more information.
 **Question 3**: Modifiez la fréquence et le duty_cycle pour faire varier la
                 luminosité de votre LED.
 
+import RPi.GPIO as GPIO
+import time
+
+led_pin = 17            
+GPIO.setmode(GPIO.BCM)  
+GPIO.setup(led_pin, GPIO.OUT)   
+pwm = GPIO.PWM(led_pin, 100)    
+pwm.start(0)  
+
+try:
+    while 1:                    
+        for x in range(100):    
+            pwm.ChangeDutyCycle(x) 
+            sleep(0.01)    
+            
+        for x in range(100,0,-1): 
+            pwm.ChangeDutyCycle(x)
+            sleep(0.01)
+
+except KeyboardInterrupt:
+    pass       
+pwm.stop()      
+GPIO.cleanup()  
+
 ## Relais
 
 L'intérêt d'un relai est de contrôler un appareil allimenté en 230V (ou 5V,
@@ -112,3 +152,5 @@ Réaliser le montage suivant avec:
 
 **Question 4**: Testez l'allumage de la LED via le contrôle de la GPIO par Sysfs
                 et Python.
+
+OK! Il faut que le duty soit suffisament élevé pour que la led s'allume.

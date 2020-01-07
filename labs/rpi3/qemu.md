@@ -24,6 +24,8 @@ $ docker run -it --privileged pblottiere/embsys-rpi3-buildroot /bin/bash
 **Question 1**: À quoi sert l'option *--priviliged* lors du lancement d'un
                 nouveau coneneur Docker?
 
+*--privileged* sert à indiquer au docker qu'il dispose de privilèges pour son exécution
+
 ### QEMU et chroot
 
 Tout d'abord, il faut installer les paquets nécessaires pour utiliser QEMU dans
@@ -59,9 +61,14 @@ root@hostname:  $
 
 **Question 2**: À quoi sert la commande *chroot*?
 
+*chroot* permet de se faire identifier en tant ue *root user*
+
 Ensuite, exécutez le binaire cross-compilé *hw* dans l'environnement *chroot*.
 
 **Question 3**: Que se passe-t-il? Pourquoi?
+
+"Hello World!" est bien affiché.
+Comme on émule le bon type de système (arm), la librairie *uClib* est trouvable
 
 Finalement, sortir de l'environnement du chroot (Ctrl-D) et démonter les
 volumes:

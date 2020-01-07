@@ -50,9 +50,14 @@ $ sudo dd if=sdcard.img of=/dev/sdX
 **Question 1**: Une fois le flashage terminé, combien y-a t-il de partition
                 sur la carte SD? Que contiennent-elles?
 
+Il y a deux partitions.
+Elles contiennent le *boot* et le *rfs* respectivement. 
+
 **Question 2**: Lire la
                 [datasheet](https://components101.com/microcontrollers/raspberry-pi-3-pinout-features-datasheet)
                 de la RPI3. Quels sont les ports TX/RX?
+
+Les ports TX/RX sont les ports GPIO14 et GPIO15 respectivement.
 
 Ensuite, branchez l'adaptateur USB-TTL sur les ports TX/RX et ouvrez un
 terminal série (gtkterm, minicom, ...). Finalement, connectez vous au réseau
@@ -61,14 +66,20 @@ avec un cable Ethernet, insérez la carte SD et démarrez la RPI3.
 **Quesion 3**: Quelle est la configuration du port série permettant une
                communication avec la RPI3 (baud, etc)?
 
+Après set up de la carte (rx->tx, tx->rx et gnd->gnd), on se connecte au tty adéquoit (ici tty/ACM0) et 115200 en baudrate.
+
 Puis, connectez vous en tant que *user* sur la RPI3 (lire le fichier
 *users.tables* pour déterminer le mot de passe).
 
 **Question 4**: Déterminez l'adresse IP de votre RPI3. Quelle commande
                 avez-vous utilisé?
 
+Avec ifconfig, on a l'adresse IP (ici 172.20.21.162)
+
 **Question 5**: Testez la connection ssh en tant que *user* et *root*. Quelle
                 différence observez-vous? Pourquoi? Où est-ce configuré?
+
+On ne peut pas se connecter en tant que root sans avoir ajouté la ligne PermitRootLogin dans le fichier /etc/ssh/ssh_config.
 
 #### Manuel (juste pour information, à ne pas faire)
 
@@ -238,6 +249,8 @@ Dans ce prompt, la commande *help* permet de lister les commandes disponibles.
 **Question 7**: À quoi sert la commande *version*? Que retourne t-elle comme
                 informations?
 
+Elle permet de récupérer la version de buildroot et du GNU linker (ld).Elle crée des fichiers exécutables:biblio logicielle.
+
 Pour reprendre la phase normale de boot et démarrez le kernel, lancez la
 commande *boot*.
 
@@ -251,6 +264,8 @@ TFTP.
                 TFTP sur votre machine hôte. Note: il faut que la machine hôte
                 et la RPI3 soit dans le même sous-réseau (autrement dit, il faut
                 qu'elles puissent se pinger).
+
+https://doc.ubuntu-fr.org/tftpd
 
 Pour tester le bon fonctionnement du serveur, lancez la commande suivante à
 partir de la RPI3 pour récupérer le fichier *zImage*:
@@ -276,6 +291,8 @@ bootz ${kernel_addr_r} - 0x2000000
 
 **Question 8**: À quoi servent les comandes *dhcp* et *tftp*?
 
+elles servent à transférer des fichiers sur un réseau.
+
 Puis recompilez ce fichier avec *mkimage* comme précédemment. Pensez ensuite à
 copier le fichier *boot.scr* résulant sur la 1ère partition de la RPI3.
 
@@ -288,6 +305,12 @@ U-Boot> saveenv
 ```
 
 **Question 9**: Décrivez les commandes précédente.
+
+U-Boot> setenv serverip_tftp <tftp_server_ip>
+permet de mettre la variable serverip_tftp à l'adresse du server tftp
+
+U-Boot> saveenv
+permet de save les modifs appliquées aux variables d'environnement.
 
 Finalement, redémarrez une dernière fois la RPI3 et observez le chargement du
 kernel:
