@@ -24,8 +24,8 @@ $ gcc -Wall -o hello hello.c
 **Question 5**: Donnez un exemple de fichier C et les lignes de commandes
                 correspondantes pour obtenir une librairie partagée.
 
-$ gcc -c -Wall -Werror -fpic helol.c
-$ gcc -shared -o libhelol.so helol.o
-$ gcc -L/home/philibert/Documents/ENSTA/embsys/labs/sysprog/ -Wall -o test main.c -lhelol
-$ LD_LIBRARY_PATH=/home/philibert/Documents/ENSTA/embsys/labs/sysprog/:$LD_LIBRARY_PATH
+$ gcc -c -Wall -Werror -fpic helol.c  
+$ gcc -shared -o libhelol.so helol.o  
+$ gcc -L/home/philibert/Documents/ENSTA/embsys/labs/sysprog/ -Wall -o test main.c -lhelol  
+$ LD_LIBRARY_PATH=/home/philibert/Documents/ENSTA/embsys/labs/sysprog/:$LD_LIBRARY_PATH  
 $ export LD_LIBRARY_PATH=/home/philibert/Documents/ENSTA/embsys/labs/sysprog/:$LD_LIBRARY_PATH
