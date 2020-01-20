@@ -45,7 +45,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/lib
 **Question 7** : Quelle est la différence entre les commandes *s* et *n* dans
                  le prompt gdb suite à un breakpoint?
 
-*s* et *n* correspondent à *step* et *next*. *step* continue jusqu'à la fin de la ligne de code, alors que *next*.
+*s* et *n* correspondent à *step* et *next*. *step* continue jusqu'à la fin de la ligne de code, alors que *next* ne rentre pas dans les fonctions.
 
 **Question 8** : Dans quel contexte ce type d'outils peut être intéressant?
 
